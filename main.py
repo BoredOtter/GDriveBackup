@@ -42,20 +42,15 @@ root = Tk()
 root.withdraw()
 paths = []
 
-
-while(1):
-    paths.append(filedialog.askdirectory(title='Choose folder to Backup'))
-    print("Add next folder? y/n")
-    option = input()
-    os.system('cls')
-    if option == 'n' or option=='N':
-        break
-    elif option == 'y' or option=='Y':
-        continue
+dirselect = filedialog.Directory(title='Choose folder to Backup')
+while True:
+    d = dirselect.show()
+    if not d: break
+    paths.append(d)
         
-print("    Folders to backup:")
+print("Folders to backup:")
 for i in range(paths.__len__()):
-    print(i+1," : ",paths[i])
+    print("    ",i+1,":",paths[i])
 
 for path in paths:
 
