@@ -4,8 +4,7 @@ from tkinter import filedialog
 from tkinter import *
 import os
 
-root = Tk()
-root.withdraw()
+
 
 #google authentication
 gauth = GoogleAuth()
@@ -13,10 +12,11 @@ gauth.LocalWebserverAuth()
 drive = GoogleDrive(gauth)
 
 #choosing path
+root = Tk()
+root.withdraw()
 path = filedialog.askdirectory(title='Choose folder to Backup')
 
-folder = os.path.split(path)
-folderName=folder[1]
+folderName=os.path.split(path)[1]
 
 print("Path: ",path)
 print("Folder: ",folderName)
@@ -38,11 +38,14 @@ folderID=folder['id']
 
 #uploading files to drive
 dir = os.listdir(path)
+temp = 0
 for file in dir:
-    print("    Uploading: ",file)
+    temp+=1
+    print("    Uploading ",temp,"/",numberOfFiles," : ",file)
     File = drive.CreateFile({'title': file,'parents': [{'id': folderID}]})
     File.SetContentFile(path+ "\\" + file)
     File.Upload()
-
+    
+print("Files uploaded!")
 
 
