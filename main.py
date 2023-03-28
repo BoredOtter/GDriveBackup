@@ -30,7 +30,8 @@ def uploadFiles(path,folderID,numberOfFiles):
         File = drive.CreateFile({'title': file,'parents': [{'id': folderID}]})
         File.SetContentFile(path+ "\\" + file)
         File.Upload()
-    print("Files uploaded!")
+    print("Files from:",path,"uploaded!\n")
+
 
 #google authentication
 gauth = GoogleAuth()
@@ -51,6 +52,7 @@ while True:
 print("Folders to backup:")
 for i in range(paths.__len__()):
     print("    ",i+1,":",paths[i])
+print("\n")
 
 for path in paths:
 
