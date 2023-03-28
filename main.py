@@ -4,7 +4,33 @@ from tkinter import filedialog
 from tkinter import *
 import os
 
+def listFiles(path):
+    numberOfFiles=0
+    for entry in os.listdir(path):
+        if os.path.isfile(os.path.join(path, entry)):
+            #print("    ",entry)  #list of files in directory
+            numberOfFiles+=1
+    print("Number of files: ",numberOfFiles)
+    return numberOfFiles
 
+
+def createParentFolder(folderName):
+    folder_metadata = {'title' : folderName, 'mimeType' : 'application/vnd.google-apps.folder'}
+    folder = drive.CreateFile(folder_metadata)
+    folder.Upload()
+    folderID=folder['id']
+    return folderID
+
+def uploadFiles(path,folderID,numberOfFiles):
+    dir = os.listdir(path)
+    temp = 0
+    for file in dir:
+        temp+=1
+        print("    Uploading ",temp,"/",numberOfFiles," : ",file)
+        File = drive.CreateFile({'title': file,'parents': [{'id': folderID}]})
+        File.SetContentFile(path+ "\\" + file)
+        File.Upload()
+    print("Files uploaded!")
 
 #google authentication
 gauth = GoogleAuth()
@@ -14,38 +40,39 @@ drive = GoogleDrive(gauth)
 #choosing path
 root = Tk()
 root.withdraw()
-path = filedialog.askdirectory(title='Choose folder to Backup')
-
-folderName=os.path.split(path)[1]
-
-print("Path: ",path)
-print("Folder: ",folderName)
+paths = []
 
 
-numberOfFiles=0
-for entry in os.listdir(path):
-    if os.path.isfile(os.path.join(path, entry)):
-        print("    ",entry)  #list of files in directory
-        numberOfFiles+=1
+while(1):
+    paths.append(filedialog.askdirectory(title='Choose folder to Backup'))
+    print("Add next folder? y/n")
+    option = input()
+    os.system('cls')
+    if option == 'n' or option=='N':
+        break
+    elif option == 'y' or option=='Y':
+        continue
+        
+print("    Folders to backup:")
+for i in range(paths.__len__()):
+    print(i+1," : ",paths[i])
 
-print("Number of files: ",numberOfFiles)
+for path in paths:
 
-#crating a folder with the same name as choosen one
-folder_metadata = {'title' : folderName, 'mimeType' : 'application/vnd.google-apps.folder'}
-folder = drive.CreateFile(folder_metadata)
-folder.Upload()
-folderID=folder['id']
+    folderName=os.path.split(path)[1]
 
-#uploading files to drive
-dir = os.listdir(path)
-temp = 0
-for file in dir:
-    temp+=1
-    print("    Uploading ",temp,"/",numberOfFiles," : ",file)
-    File = drive.CreateFile({'title': file,'parents': [{'id': folderID}]})
-    File.SetContentFile(path+ "\\" + file)
-    File.Upload()
+    print("Path: ",path)
+    print("Folder: ",folderName)
+
+    #files
+    numberOfFiles=listFiles(path)
+
+    #crating a folder with the same name as choosen one
+    folderID=createParentFolder(folderName)
+
+    #uploading files to drive
+    uploadFiles(path,folderID,numberOfFiles)
     
-print("Files uploaded!")
+input("Press Enter to continue")
 
 
