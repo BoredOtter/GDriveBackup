@@ -27,3 +27,7 @@ This Python script allows you to backup a local folder to Google Drive using the
 ## Usage .exe
 1. Place **clients_secrets.json** in the same location as **.exe**
 2. Run **.exe**
+## Examples
+![1](https://user-images.githubusercontent.com/35179220/229290488-bf5b6e25-441d-4096-8ca3-ec41d8e39cba.png)
+
+![2](https://user-images.githubusercontent.com/35179220/229290493-310a1801-e4e4-403d-9376-93afab221a5f.png)
