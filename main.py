@@ -32,6 +32,12 @@ def uploadFiles(path,folderID,numberOfFiles):
         File.Upload()
     print("Files uploaded!")
 
+#checking for client_secrets
+if os.path.exists('client_secrets.json')==False:
+    print("No client_secrets.json")
+    os._exit(1)
+    #GoogleAuth.DEFAULT_SETTINGS['client_config_file'] = path_to_secrets_file
+
 #google authentication
 gauth = GoogleAuth()
 gauth.LocalWebserverAuth()
@@ -41,6 +47,8 @@ drive = GoogleDrive(gauth)
 root = Tk()
 root.withdraw()
 paths = []
+
+
 
 dirselect = filedialog.Directory(title='Choose folder to Backup')
 while True:
@@ -69,5 +77,5 @@ for path in paths:
     uploadFiles(path,folderID,numberOfFiles)
     
 input("Press Enter to continue")
-
+os._exit(0) #is it worth adding for pyinstaller?
 

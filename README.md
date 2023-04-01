@@ -11,9 +11,10 @@ This Python script allows you to backup a local folder to Google Drive using the
 
 ## Requirements
 
--   PyDrive
--   tkinter
+-  PyDrive
+-  tkinter
 -  Properly setted Google Account and Google API
+-  PyInstaller for creating an .exe
 
 ## Usage
 
@@ -22,3 +23,7 @@ This Python script allows you to backup a local folder to Google Drive using the
 3.  Authenticate your Google Drive account.
 4.  Choose the local folder to backup.
 5.  The script will automatically create a folder with the same name on your Google Drive and upload all files from the local folder to the newly created folder on Google Drive.
+
+## Usage .exe
+1. Place **clients_secrets.json** in the same location as **.exe**
+2. Run **.exe**

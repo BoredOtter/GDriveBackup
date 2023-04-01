@@ -8,7 +8,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=[('./icon.ico',('.'))],
     hiddenimports=[],
     hookspath=["./hooks"],
     hooksconfig={},
@@ -22,13 +22,14 @@ a = Analysis(
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
 exe = EXE(
+    
     pyz,
     a.scripts,
     a.binaries,
     a.zipfiles,
     a.datas,
     [],
-    name='main',
+    name='GDrivebackup',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -41,4 +42,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon="icon.ico"
 )
